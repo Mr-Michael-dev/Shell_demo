@@ -11,7 +11,7 @@ int main(void)
 	size_t len = 0;
 	ssize_t read;
 	char *del = " \n";
-	char *arg[10];
+	char *arg[11];
 	size_t i = 0;
 	char *token;
 	char *line_cpy;
@@ -30,16 +30,19 @@ int main(void)
 			token = strtok(NULL, del);
 		}
 
+		arg[i] = NULL;
+
 		cpid = fork();
 		if (cpid == -1)
 		{
-			perror("Error occured");
+			perror("#cisfun$");
 		}
 		if (cpid == 0)
 		{
 			if ((execve(arg[0], arg, NULL)) == -1)
 			{
-				perror("Execution Failed");
+				perror("#cisfun$");
+				exit(1);
 			}
 		}
 		else
@@ -47,12 +50,12 @@ int main(void)
 			wait(NULL);
 		}
 
+		i = 0;
 		printf("#cisfun:$ ");
 		free(line);
 		free(line_cpy);
 		len = 0;
 		line = NULL;
-		i = 0;
 
 	}
 	free(line);
