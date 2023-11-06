@@ -17,11 +17,10 @@ int main(void)
 	char *line_cpy;
 	pid_t cpid;
 
-	printf("#cisfun:$ ");
-
-
+	
 	while ((read = getline(&line, &len, stdin)) != EOF)
 	{
+		printf("#cisfun:$ ");
 		line_cpy = strdup(line);
 		token = strtok(line_cpy, del);
 		while (token != NULL && i < 10)
@@ -51,7 +50,7 @@ int main(void)
 		}
 
 		i = 0;
-		printf("#cisfun:$ ");
+		
 		free(line);
 		free(line_cpy);
 		len = 0;
