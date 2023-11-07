@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <errno.h>
 
 int main(void)
 {
@@ -17,10 +18,10 @@ int main(void)
 	char *line_cpy;
 	pid_t cpid;
 
-	
+	printf("#cisfun:$ ");
+
 	while ((read = getline(&line, &len, stdin)) != EOF)
 	{
-		printf("#cisfun:$ ");
 		line_cpy = strdup(line);
 		token = strtok(line_cpy, del);
 		while (token != NULL && i < 10)
@@ -40,8 +41,8 @@ int main(void)
 		{
 			if ((execve(arg[0], arg, NULL)) == -1)
 			{
-				perror("#cisfun$");
-				exit(1);
+				fprintf(stderr, "%s: %s\n", arg[0], strerror(errno));
+                exit(EXIT_FAILURE);
 			}
 		}
 		else
@@ -51,6 +52,7 @@ int main(void)
 
 		i = 0;
 		
+		printf("#cisfun:$ ");
 		free(line);
 		free(line_cpy);
 		len = 0;
